@@ -681,10 +681,13 @@ func (req *pong) handle(t *udp, from *net.UDPAddr, fromKey encPubkey, mac []byte
 func (req *pong) name() string { return "PONG/v4" }
 
 func (req *findnode) handle(t *udp, from *net.UDPAddr, fromKey encPubkey, mac []byte) error {
+	fmt.Println("findnode handle")
 	if expired(req.Expiration) {
+		fmt.Println("expired", req.Expiration)
 		return errExpired
 	}
 	if t.magicNetID != req.MagicNetID {
+		fmt.Println(fmt.Errorf("receive findnode packet from other network. self.NetID=%x remote.NetID=%x", t.magicNetID, req.MagicNetID))
 		return fmt.Errorf("receive findnode packet from other network. self.NetID=%x remote.NetID=%x", t.magicNetID, req.MagicNetID)
 	}
 	fromID := fromKey.id()
@@ -695,6 +698,7 @@ func (req *findnode) handle(t *udp, from *net.UDPAddr, fromKey encPubkey, mac []
 		// and UDP port of the target as the source address. The recipient of the findnode
 		// packet would then send a neighbors packet (which is a much bigger packet than
 		// findnode) to the victim.
+		fmt.Println("errUnknownNode")
 		return errUnknownNode
 	}
 	target := enode.ID(crypto.Keccak256Hash(req.Target[:]))
@@ -724,6 +728,7 @@ func (req *findnode) handle(t *udp, from *net.UDPAddr, fromKey encPubkey, mac []
 			p.Nodes = append(p.Nodes, nodeToRPC(n))
 		}
 		if len(p.Nodes) == maxNeighbors {
+			fmt.Println("t.send-1")
 			t.send(from, neighborsPacket, &p)
 			p.Nodes = p.Nodes[:0]
 			sent = true
@@ -733,8 +738,10 @@ func (req *findnode) handle(t *udp, from *net.UDPAddr, fromKey encPubkey, mac []
 		p.Nodes = append(p.Nodes, nodeToRPC(bot))
 	}
 	if len(p.Nodes) > 0 || !sent {
+		fmt.Println("t.send-2")
 		t.send(from, neighborsPacket, &p)
 	}
+	fmt.Println("return nil")
 	return nil
 }
 

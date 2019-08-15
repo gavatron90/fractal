@@ -43,6 +43,7 @@ var RootCmd = &cobra.Command{
 	// Uncomment the following line if your bare application
 	// has an action associated with it:
 	Run: func(cmd *cobra.Command, args []string) {
+		fmt.Println("new finder")
 		hexStr, _ := cmd.Flags().GetString("genesisHash")
 		nodeConfig.P2PConfig.PrivateKey = nodeConfig.NodeKey()
 		nodeConfig.P2PConfig.BootstrapNodes = nodeConfig.BootNodes()

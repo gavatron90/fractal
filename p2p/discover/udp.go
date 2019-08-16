@@ -287,7 +287,7 @@ func newUDP(c conn, cfg Config) (*Table, *udp, error) {
 	}
 	udp.Table = tab
 
-	// fix bug: // fix bug: the newTable() on above will call udp.findnode by go-routing, and then access upd.tab, but upd.tab may not initialized.
+	// fix bug: the newTable() on above will call udp.findnode by go-routing, and then access upd.tab, but upd.tab may not initialized.
 	tab.initDone <- struct{}{}
 
 	go udp.loop()
@@ -323,8 +323,10 @@ func (t *udp) sendPing(toid enode.ID, toaddr *net.UDPAddr, callback func()) <-ch
 		errc <- err
 		return errc
 	}
+	fmt.Println("ping", toid.String(), toaddr.String())
 	errc := t.pending(toid, pongPacket, func(p interface{}) bool {
 		ok := bytes.Equal(p.(*pong).ReplyTok, hash)
+		fmt.Println("ping-pong:", toid.String())
 		if ok && callback != nil {
 			callback()
 		}
@@ -633,6 +635,7 @@ func decodePacket(buf []byte) (packet, encPubkey, []byte, error) {
 }
 
 func (req *ping) handle(t *udp, from *net.UDPAddr, fromKey encPubkey, mac []byte) error {
+	fmt.Println("ping handle start")
 	if expired(req.Expiration) {
 		return errExpired
 	}
@@ -658,12 +661,14 @@ func (req *ping) handle(t *udp, from *net.UDPAddr, fromKey encPubkey, mac []byte
 		t.addThroughPing(n)
 	}
 	t.db.UpdateLastPingReceived(n.ID(), time.Now())
+	fmt.Println("ping reply")
 	return nil
 }
 
 func (req *ping) name() string { return "PING/v4" }
 
 func (req *pong) handle(t *udp, from *net.UDPAddr, fromKey encPubkey, mac []byte) error {
+	fmt.Println("pong!")
 	if expired(req.Expiration) {
 		return errExpired
 	}

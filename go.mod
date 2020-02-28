@@ -13,7 +13,7 @@ require (
 	github.com/hashicorp/golang-lru v0.5.3
 	github.com/influxdata/influxdb1-client v0.0.0-20190402204710-8ff2fc3824fc
 	github.com/kylelemons/godebug v1.1.0 // indirect
-	github.com/mattn/go-colorable v0.1.2
+	github.com/mattn/go-colorable v0.1.6
 	github.com/mattn/go-isatty v0.0.8
 	github.com/monax/relic v2.0.0+incompatible
 	github.com/naoina/go-stringutil v0.1.0 // indirect

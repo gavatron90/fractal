@@ -18,7 +18,7 @@ require (
 	github.com/monax/relic v2.0.0+incompatible
 	github.com/naoina/go-stringutil v0.1.0 // indirect
 	github.com/naoina/toml v0.1.1
-	github.com/rs/cors v1.6.0
+	github.com/rs/cors v1.7.0
 	github.com/smartystreets/goconvey v0.0.0-20190731233626-505e41936337
 	github.com/spf13/cobra v0.0.5
 	github.com/spf13/jwalterweatherman v1.1.0

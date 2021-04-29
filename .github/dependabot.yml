@@ -1,0 +1,16 @@
+version: 2
+updates:
+- package-ecosystem: gomod
+  directory: "/"
+  schedule:
+    interval: daily
+  open-pull-requests-limit: 10
+  ignore:
+  - dependency-name: github.com/ethereum/go-ethereum
+    versions:
+    - 1.10.0
+    - 1.10.1
+    - 1.9.25
+  - dependency-name: github.com/golang/snappy
+    versions:
+    - 0.0.2

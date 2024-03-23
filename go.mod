@@ -10,7 +10,7 @@ require (
 	github.com/ethereum/go-ethereum v1.9.1
 	github.com/fjl/memsize v0.0.0-20190710130421-bcb5799ab5e5
 	github.com/golang/snappy v0.0.1
-	github.com/hashicorp/golang-lru v0.5.3
+	github.com/hashicorp/golang-lru v0.5.4
 	github.com/influxdata/influxdb1-client v0.0.0-20190402204710-8ff2fc3824fc
 	github.com/kylelemons/godebug v1.1.0 // indirect
 	github.com/mattn/go-colorable v0.1.2
